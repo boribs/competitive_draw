@@ -108,11 +108,18 @@ function withinCanvas(event, rect) {
     event.y <= (rect.y + rect.height - 2);
 }
 
+function calculateCanvasPos(event, rect) {
+  const ix = ((event.x - rect.x) / rect.width) * canvas.width,
+        iy = ((event.y - rect.y) / rect.height) * canvas.height;
+
+  return [ix, iy];
+}
+
 function mousedownHandler(event) {
   let rect = canvas.getBoundingClientRect();
 
   if (!mouseDown && withinCanvas(event, rect)) {
-    let x = event.x - rect.x, y = event.y - rect.y;
+    let [x, y] = calculateCanvasPos(event, rect);
 
     tool.onClick(x, y, ctx);
     // console.log("click");
@@ -124,7 +131,7 @@ function mousemoveHandler(event) {
   let rect = canvas.getBoundingClientRect();
 
   if (mouseDown && withinCanvas(event, rect)) {
-    let x = event.x - rect.x, y = event.y - rect.y;
+    let [x, y] = calculateCanvasPos(event, rect);
 
     tool.onHold(x, y, ctx);
     // console.log("hold");
