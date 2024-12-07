@@ -1,12 +1,24 @@
 :root {
+    --max-players: 8;
+
     --background-white: #f7fff7;
+    --leaderboard-player-background: beige;
 
     --border-radius: 0.5em;
 
     --column: calc(100vw / 7);
+
     --leaderboard-width-full: calc(var(--column) * 1.5);
+    --leaderboard-player-holder-border: 2px;
+    --leaderboard-player-holder-height: calc(
+        (100% / var(--max-players)) -
+        (var(--leaderboard-player-holder-border) / 2)
+    );
+    --leaderboard-player-image-width: calc(100% * 0.65);
+
     --canvas-width-max: min(45vw, 80vh);
     --canvas-width-full: calc(var(--column) * 4);
+
     --chat-width-full: calc(var(--column) * 2.5);
 }
 
@@ -27,6 +39,41 @@ main {
 
     border-radius: var(--border-radius);
     border: 1px solid darkred;
+
+    overflow: hidden;
+}
+
+.leaderboard-player-holder {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: var(--leaderboard-player-holder-height);
+    background: var(--leaderboard-player-background);
+    border-bottom: var(--leaderboard-player-holder-border) solid darkred;
+}
+
+.leaderboard-player-image {
+    height: var(--leaderboard-player-image-width);
+    aspect-ratio: 1 / 1;
+    background: red;
+    border-radius: 50%;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.leaderboard-player-data {
+    width: 100%;
+    margin-right: 0.5em;
+}
+
+.leaderboard-player-data p {
+    margin: 0;
+}
+
+.leaderboard-player-score {
+    font-size: 1.3em;
+    padding-left: 1em;
 }
 
 #canvas {
