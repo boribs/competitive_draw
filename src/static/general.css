@@ -5,6 +5,7 @@
 
     --column: calc(100vw / 7);
     --leaderboard-width-full: calc(var(--column) * 1.5);
+    --canvas-width-max: min(45vw, 80vh);
     --canvas-width-full: calc(var(--column) * 4);
     --chat-width-full: calc(var(--column) * 2.5);
 }
@@ -32,7 +33,12 @@ main {
     margin: 2em 0em 2em 0em;
     /* border: 1px solid black; */
     background: var(--background-white);
-    /* width: var(--canvas-width-full); */
+
+    max-width: var(--canvas-width-max);
+    width: var(--canvas-width-full);
+
+    max-height: var(--canvas-width-max);
+    height: var(--canvas-width-full);
 }
 
 #canvas-holder {
