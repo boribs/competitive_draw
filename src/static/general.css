@@ -1,0 +1,54 @@
+:root {
+    --background-white: #f7fff7;
+
+    --border-radius: 0.5em;
+
+    --column: calc(100vw / 7);
+    --leaderboard-width-full: calc(var(--column) * 1.5);
+    --canvas-width-full: calc(var(--column) * 4);
+    --chat-width-full: calc(var(--column) * 2.5);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: gray;
+}
+
+main {
+    display: flex;
+}
+
+#leaderboard-holder {
+    width: var(--leaderboard-width-full);
+    margin: 1em;
+    background: var(--background-white);
+
+    border-radius: var(--border-radius);
+    border: 1px solid darkred;
+}
+
+#canvas {
+    margin: 2em 0em 2em 0em;
+    /* border: 1px solid black; */
+    background: var(--background-white);
+    /* width: var(--canvas-width-full); */
+}
+
+#canvas-holder {
+    margin: 1em;
+    display: inline-block;
+
+    background: red;
+    border: 1px solid darkred;
+    border-radius: var(--border-radius);
+}
+
+#chat-holder {
+    width: var(--chat-width-full);
+    margin: 1em;
+
+    background: var(--background-white);
+    border: 1px solid darkred;
+    border-radius: var(--border-radius);
+}
