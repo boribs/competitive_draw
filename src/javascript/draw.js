@@ -68,7 +68,7 @@ class Pencil extends DrawingTool {
     ctx.lineWidth = this.thickness;
 
     ctx.moveTo(x, y);
-    ctx.lineTo(x, y);
+    ctx.lineTo(x + 1, y + 1);
     ctx.stroke();
 
     this.#lastDot.x = x;
