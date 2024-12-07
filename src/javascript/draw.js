@@ -128,13 +128,16 @@ function mousemoveHandler(event) {
 
     tool.onHold(x, y, ctx);
     // console.log("hold");
+  } else {
+    mouseDown = false;
+    tool.onRelease(event.x, event.y, ctx);
   }
 }
 
 function mouseupHandler(event) {
   mouseDown = false;
   tool.onRelease(event.x, event.y, ctx);
-  console.log("release");
+  // console.log("release");
 }
 
 document.addEventListener("mousedown", mousedownHandler);
