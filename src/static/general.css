@@ -26,6 +26,10 @@ body {
     margin: 0;
     padding: 0;
     background: gray;
+
+    /* font-family: "Nanum Pen Script", serif;
+    font-weight: 400;
+    font-style: normal; */
 }
 
 main {
@@ -98,10 +102,38 @@ main {
 }
 
 #chat-holder {
+    max-height: calc(var(--canvas-width-max) + 3em);
+    height: calc(var(--canvas-width-full) + 3em);
     width: var(--chat-width-full);
     margin: 1em;
 
     background: var(--background-white);
     border: 1px solid darkred;
     border-radius: var(--border-radius);
+
+    overflow-y: scroll;
+}
+
+#chat-holder p {
+    margin: 0.5em 0.4em 0 0.4em;
+}
+
+.guessed {
+    font-weight: 800;
+}
+
+.player-red {
+    color: red;
+}
+
+.player-blue {
+    color: blue;
+}
+
+.player-yellow {
+    color: gold;
+}
+
+.player-green {
+    color: green;
 }
