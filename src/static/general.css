@@ -102,16 +102,43 @@ main {
 }
 
 #chat-holder {
+    margin: 1em;
+    width: var(--chat-width-full);
+}
+
+#chat-holder-messages {
     max-height: calc(var(--canvas-width-max) + 3em);
     height: calc(var(--canvas-width-full) + 3em);
-    width: var(--chat-width-full);
-    margin: 1em;
 
     background: var(--background-white);
     border: 1px solid darkred;
-    border-radius: var(--border-radius);
+    border-bottom: 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
 
     overflow-y: scroll;
+}
+
+#chat-holder-textbox {
+    display: flex;
+    align-items: center;
+    background: var(--background-white);
+
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border: 1px solid darkred;
+    border-top: 0;
+}
+
+#chat-textbox {
+    width: 90%;
+
+    padding: 0;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 0.2em;
+
+    border: 0;
+    border-bottom: 1px solid gray;
+    outline: none;
 }
 
 #chat-holder p {

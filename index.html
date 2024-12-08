@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet"> -->
 
+    <script src="src/javascript/main.js" type="module" defer></script>
     <script src="src/javascript/draw.js" type="module" defer></script>
     <link rel="stylesheet" href="src/static/general.css">
 </head>
@@ -32,11 +33,16 @@
             <canvas id="canvas" width="300" height="300"></canvas>
         </div>
         <div id="chat-holder">
-            <div id="chat-holder-inner">
-                <p><span class="player-red">RafitaGRRRR</span>: No sé qué dicen locos</p>
-                <p><span class="player-green">BOMBORIS</span>: No sé qué dicen locosNo sé qué dicen locosNo sé qué dicen locosNo sé qué dicen locos</p>
-                <p class="guessed"><span class="player-yellow">Remi</span> adivinó la palabra!</p>
-                <p class="guessed"><span class="player-red">RafitaGRRRR</span> adivinó la palabra!</p>
+            <div id="chat-holder-messages">
+                <div id="chat-holder-inner">
+                    <p><span class="player-red">RafitaGRRRR</span>: No sé qué dicen locos</p>
+                    <p><span class="player-green">BOMBORIS</span>: No sé qué dicen locosNo sé qué dicen locosNo sé qué dicen locosNo sé qué dicen locos</p>
+                    <p class="guessed"><span class="player-yellow">Remi</span> adivinó la palabra!</p>
+                    <p class="guessed"><span class="player-red">RafitaGRRRR</span> adivinó la palabra!</p>
+                </div>
+            </div>
+            <div id="chat-holder-textbox">
+                <input id="chat-textbox" placeholder="escribe algo..." autocomplete="off">
             </div>
         </div>
     </main>
