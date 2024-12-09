@@ -16,6 +16,8 @@
     );
     --leaderboard-player-image-width: calc(100% * 0.65);
 
+    --word-display-height: 3em;
+
     --canvas-width-max: min(45vw, 80vh);
     --canvas-width-full: calc(var(--column) * 4);
 
@@ -80,8 +82,25 @@ main {
     padding-left: 1em;
 }
 
+#word-display {
+    height: var(--word-display-height);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.letter-box {
+    height: 1em;
+    width: 1em;
+    border-bottom: 3px solid darkred;
+    margin: 0 0.4em 0 0.4em;
+    text-align: center;
+}
+
 #canvas {
-    margin: 2em 0em 2em 0em;
+    margin: 0em 0em 2em 0em;
     /* border: 1px solid black; */
     background: var(--background-white);
 
@@ -107,8 +126,8 @@ main {
 }
 
 #chat-holder-messages {
-    max-height: calc(var(--canvas-width-max) + 3em);
-    height: calc(var(--canvas-width-full) + 3em);
+    max-height: calc(var(--canvas-width-max) + 4em);
+    height: calc(var(--canvas-width-full) + 4em);
 
     background: var(--background-white);
     border: 1px solid darkred;
