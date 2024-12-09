@@ -34,5 +34,59 @@ function setWord(word) {
   });
 }
 
-
 setWord("PALABRA");
+
+/**
+ * mouse controls.
+ */
+let mouseDown = false;
+
+function withinCanvas(event, rect) {
+  return event.x >= rect.x &&
+    event.x <= (rect.x + rect.width - 2) &&
+    event.y >= rect.y &&
+    event.y <= (rect.y + rect.height - 2);
+}
+
+function calculateCanvasPos(event, rect) {
+  const ix = ((event.x - rect.x) / rect.width) * canvas.width,
+        iy = ((event.y - rect.y) / rect.height) * canvas.height;
+
+  return [ix, iy];
+}
+
+function mousedownHandler(event) {
+  let rect = canvas.getBoundingClientRect();
+
+  if (!mouseDown && withinCanvas(event, rect)) {
+    let [x, y] = calculateCanvasPos(event, rect);
+
+    tool.onClick(x, y, ctx);
+    // console.log("click");
+  }
+  mouseDown = true;
+}
+
+function mousemoveHandler(event) {
+  let rect = canvas.getBoundingClientRect();
+
+  if (mouseDown && withinCanvas(event, rect)) {
+    let [x, y] = calculateCanvasPos(event, rect);
+
+    tool.onHold(x, y, ctx);
+    // console.log("hold");
+  } else {
+    mouseDown = false;
+    tool.onRelease(event.x, event.y, ctx);
+  }
+}
+
+function mouseupHandler(event) {
+  mouseDown = false;
+  tool.onRelease(event.x, event.y, ctx);
+  // console.log("release");
+}
+
+canvas.addEventListener("mousedown", mousedownHandler);
+canvas.addEventListener("mouseup", mouseupHandler);
+canvas.addEventListener("mousemove", mousemoveHandler);

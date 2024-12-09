@@ -24,26 +24,27 @@ class UnimplementedError extends Error {
 class DrawingTool {
   color = "#000000";
 
-  constructor(color) {
+  constructor(color, ctx) {
     this.color = color;
+    this.ctx = ctx;
   }
 
   /**
    * (x, y) in canvas.
    * basically "mousedown"
    */
-  onClick(x, y, ctx) {
+  onClick(x, y) {
     throw new UnimplementedError('onClick()');
   }
 
-  onHold(x, y, ctx) {
+  onHold(x, y) {
     throw new UnimplementedError('onHold()');
   }
 
   /**
    * basically "mouseup"
    */
-  onRelease(x, y, ctx) {
+  onRelease(x, y) {
     throw new UnimplementedError('onRelease()');
   }
 }
@@ -58,32 +59,32 @@ class Pencil extends DrawingTool {
     y: 0,
   };
 
-  constructor(color = "#abca00", thickness = 3) {
-    super(color);
+  constructor(ctx, color = "#abca00", thickness = 3) {
+    super(color, ctx);
     this.thickness = thickness;
   }
 
-  onClick(x, y, ctx) {
-    ctx.strokeStyle = this.color;
-    ctx.lineWidth = this.thickness;
+  onClick(x, y) {
+    this.ctx.strokeStyle = this.color;
+    this.ctx.lineWidth = this.thickness;
 
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + 1, y + 1);
-    ctx.stroke();
+    this.ctx.moveTo(x, y);
+    this.ctx.lineTo(x + 1, y + 1);
+    this.ctx.stroke();
 
     this.#lastDot.x = x;
     this.#lastDot.y = y;
   }
 
-  onRelease(x, y, ctx) { ; }
+  onRelease(x, y) { ; }
 
-  onHold(x, y, ctx) {
-    ctx.strokeStyle = this.color;
-    ctx.lineWidth = this.thickness;
+  onHold(x, y) {
+    this.ctx.strokeStyle = this.color;
+    this.ctx.lineWidth = this.thickness;
 
-    ctx.moveTo(this.#lastDot.x, this.#lastDot.y);
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    this.ctx.moveTo(this.#lastDot.x, this.#lastDot.y);
+    this.ctx.lineTo(x, y);
+    this.ctx.stroke();
 
     this.#lastDot.x = x;
     this.#lastDot.y = y;
