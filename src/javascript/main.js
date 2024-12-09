@@ -1,6 +1,13 @@
 // expressjs stuff
 // server invocation
 
+import { Pencil } from "./draw.js";
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let tool = new Pencil(ctx);
+
 function handleSubmit(e) {
   if (e.key === "Enter") {
     const text = e.explicitOriginalTarget.value;
