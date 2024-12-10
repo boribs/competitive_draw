@@ -18,10 +18,10 @@
     );
     --leaderboard-player-image-width: calc(100% * 0.65);
 
-    --word-display-height: 3em;
+    --word-display-height: 5em;
 
     --canvas-holder-height-max: calc(87vh + 3em);
-    --canvas-width-max: min(45vw, 80vh);
+    --canvas-width-max: min(45vw, 75vh);
     --canvas-width-full: calc((var(--column) * 4) - 3em);
 
     --chat-width-full: calc(var(--column) * 2.5);
@@ -98,7 +98,39 @@ main {
     justify-content: center;
     align-items: center;
 
-    font-size: 1.2cqw;
+    font-size: 1.15cqw;
+    font-weight: bold;
+}
+
+#word-display.selecting {
+    justify-content: space-between;
+    margin: 0 1em 0 1em;
+}
+
+.word-suggestion {
+    width: calc((100% - 2em) * 0.85 / 3);
+    height: 1.2cqw;
+    border: 1px solid black;
+    border-radius: var(--border-radius-tool);
+
+    text-align: center;
+    font-size: 1cqw;
+}
+
+.word-suggestion:hover {
+    color: darkred;
+    border: 1px solid darkred;
+    cursor: default;
+}
+
+.word-suggestion.word-small {
+    align-content: center;
+    font-size: 0.75cqw;
+}
+
+#other-word {
+    width: calc((100% - 2em) * 0.15);
+    height: 1.2cqw;
 }
 
 .letter-box {
@@ -126,16 +158,12 @@ main {
 
 #canvas {
     margin: 0;
-    /* border: 1px solid black; */
     background: var(--background-white);
 
     max-width: var(--canvas-width-max);
     width: var(--canvas-width-full);
 
     aspect-ratio: 1 / 1;
-
-    /* max-height: var(--canvas-width-max);
-    height: var(--canvas-width-full); */
 }
 
 #toolbox {

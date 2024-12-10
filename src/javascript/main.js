@@ -19,22 +19,66 @@ function handleSubmit(e) {
 document.getElementById("chat-textbox").addEventListener("keydown", handleSubmit);
 
 /**
- * @param word string
- * ...
+ * @param {String} word The word to be set for the players to guess
+ * @param {bool} fill Fill letters in word?
  */
-function setWord(word) {
+function setWord(word, fill) {
   const wd = document.getElementById("word-display");
 
   Array.from(word).forEach((l, i) => {
     const d = document.createElement("div");
     d.classList.add("letter-box");
     d.id = `letter-${i}`;
-    d.innerText = l;
+
+    if (fill) {
+      d.innerText = l;
+    }
+
     wd.appendChild(d);
   });
 }
 
-setWord("PALABRA");
+// setWord("PARANGARICUTIRIMICUARO");
+
+function suggestWords() {
+  // request words
+  const words = ["perezoso", "espantapajaros", "parangaricutirimicuaro"];
+  const parent = document.getElementById("word-display");
+  parent.classList.add("selecting");
+
+  words.forEach((w) => {
+    const s = document.createElement("div");
+    s.classList.add("word-suggestion");
+    if (w.length > 16) { s.classList.add("word-small"); }
+    s.innerText = w.toUpperCase();
+    s.onclick = () => {
+      console.log("selected: ", s.innerText);
+    }
+
+    parent.appendChild(s);
+  });
+
+  const o = document.createElement("div");
+  o.classList.add("word-suggestion");
+  o.id = "other-word";
+  o.innerText = "OTRO";
+  o.onclick = () => {
+    parent.replaceChildren();
+
+    document.getElementById("chat-textbox").disabled = true;
+
+    const l = document.createElement("div");
+    l.innerText = "ESCRIBE TU PALABRA:";
+    l.classList.add("first-letter");
+    parent.appendChild(l);
+    parent.classList.remove("selecting");
+
+    document.addEventListener("keydown", keydownListener);
+  }
+  parent.appendChild(o);
+}
+
+suggestWords();
 
 /**
  * mouse controls.
@@ -50,7 +94,7 @@ function withinCanvas(event, rect) {
 
 function calculateCanvasPos(event, rect) {
   const ix = ((event.x - rect.x) / rect.width) * canvas.width,
-        iy = ((event.y - rect.y) / rect.height) * canvas.height;
+    iy = ((event.y - rect.y) / rect.height) * canvas.height;
 
   return [ix, iy];
 }
@@ -85,6 +129,45 @@ function mouseupHandler(event) {
   mouseDown = false;
   tool.onRelease(event.x, event.y, ctx);
   // console.log("release");
+}
+
+/**
+ *
+ */
+function isAlphanumeric(str) {
+  return /^[a-zA-Z0-9]+$/.test(str);
+}
+
+/**
+ *
+ */
+function keydownListener(event) {
+  const parent = document.getElementById("word-display");
+
+  if (event.keyCode === 8) {
+    if (parent.hasChildNodes()) {
+      parent.removeChild(parent.lastChild);
+    }
+
+  } else if (event.keyCode === 13 && parent.children.length > 1) {
+    document.removeEventListener("keydown", keydownListener);
+    document.getElementById("chat-textbox").disabled = false;
+    // TODO: Notify server!
+
+  } else if (
+    event.key.length === 1 &&
+    parent.children.length < 24 &&
+    isAlphanumeric(event.key)
+  ) {
+    if (parent.hasChildNodes() && parent.childNodes[0].classList.contains("first-letter")) {
+      parent.replaceChildren();
+    }
+
+    const l = document.createElement("div");
+    l.classList.add("letter-box");
+    l.innerHTML = event.key.toUpperCase();
+    parent.appendChild(l);
+  }
 }
 
 canvas.addEventListener("mousedown", mousedownHandler);
