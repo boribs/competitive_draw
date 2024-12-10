@@ -80,8 +80,12 @@ main {
     margin: 0;
 }
 
+.leaderboard-player-name {
+    font-size: 1.3cqw;
+}
+
 .leaderboard-player-score {
-    font-size: 1.3em;
+    font-size: 1.6cqw;
     padding-left: 1em;
 }
 
@@ -91,6 +95,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    font-size: 1.2cqw;
 }
 
 .letter-box {
@@ -182,7 +188,7 @@ main {
     border-bottom: 0;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 
-    overflow-y: scroll;
+    font-size: 1.3cqw;
 }
 
 #chat-holder-textbox {
