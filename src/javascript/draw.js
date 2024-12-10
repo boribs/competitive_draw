@@ -37,6 +37,9 @@ class DrawingTool {
     throw new UnimplementedError('onClick()');
   }
 
+  /**
+   * Whatever needs to be done while holding the mouse down.
+   */
   onHold(x, y) {
     throw new UnimplementedError('onHold()');
   }
@@ -46,6 +49,14 @@ class DrawingTool {
    */
   onRelease(x, y) {
     throw new UnimplementedError('onRelease()');
+  }
+
+  /**
+   * Changes the color.
+   * @param {String} color
+   */
+  changeColor(color) {
+    this.color = color;
   }
 }
 
@@ -91,6 +102,28 @@ class Pencil extends DrawingTool {
     this.#lastDot.x = x;
     this.#lastDot.y = y;
   }
+
+  /**
+   * Changes the thickness.
+   * @param {number} thickness
+  */
+  changeThickness(thickness) {
+    this.thickness = thickness;
+  }
 }
 
-export { Pencil };
+/**
+ * The eraser class: Draws the same as default background color.
+ */
+class Eraser extends Pencil {
+  constructor(ctx, thickness = 3) {
+    super(ctx, "white", thickness);
+  }
+
+  /**
+   * Overwrites this method to prevent color changing.
+   */
+  changeThickness(thickness) { ; }
+}
+
+export { Pencil, Eraser };

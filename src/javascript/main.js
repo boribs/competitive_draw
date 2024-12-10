@@ -1,12 +1,16 @@
 // expressjs stuff
 // server invocation
 
-import { Pencil } from "./draw.js";
+import { Pencil, Eraser } from "./draw.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-let tool = new Pencil(ctx);
+const TOOLS = {
+  "toolbox-pencil": new Pencil(ctx),
+  "toolbox-eraser": new Eraser(ctx),
+};
+let tool = TOOLS["toolbox-pencil"];
 
 /**
  * @param {String} word The word to be set for the players to guess
@@ -207,6 +211,15 @@ document.getElementById("chat-textbox").addEventListener("keydown", chatBoxSubmi
 canvas.addEventListener("mousedown", mousedownHandler);
 canvas.addEventListener("mouseup", mouseupHandler);
 canvas.addEventListener("mousemove", mousemoveHandler);
+
+/**
+ * Tool changes!
+ */
+["toolbox-pencil", "toolbox-eraser"].forEach((id) => {
+  document.getElementById(id).onclick = () => {
+    tool = TOOLS[id];
+  };
+})
 
 /**
  * Color changes!
