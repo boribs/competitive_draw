@@ -31,7 +31,8 @@ function setWord(word, fill) {
 // setWord("PARANGARICUTIRIMICUARO");
 
 /**
- *
+ * GUI display of suggested words.
+ * *INCOMPLETE*
  */
 function suggestWords() {
   // request words
@@ -78,6 +79,11 @@ suggestWords();
  */
 let mouseDown = false;
 
+/**
+ * @param {Event} event
+ * @param {DOMRect} rect
+ * @return {bool} Whether the event was executed within the canvas space.
+ */
 function withinCanvas(event, rect) {
   return event.x >= rect.x &&
     event.x <= (rect.x + rect.width - 2) &&
@@ -85,6 +91,12 @@ function withinCanvas(event, rect) {
     event.y <= (rect.y + rect.height - 2);
 }
 
+/**
+ * Converts screen-pixel position to canvas logical position.
+ * @param {Event} event
+ * @param {DOMRect} rect
+ * @return {number[]}
+ */
 function calculateCanvasPos(event, rect) {
   const ix = ((event.x - rect.x) / rect.width) * canvas.width,
     iy = ((event.y - rect.y) / rect.height) * canvas.height;
@@ -92,6 +104,10 @@ function calculateCanvasPos(event, rect) {
   return [ix, iy];
 }
 
+/**
+ * Handles the mousedown event.
+ * @param {Event} event
+ */
 function mousedownHandler(event) {
   let rect = canvas.getBoundingClientRect();
 
@@ -104,6 +120,10 @@ function mousedownHandler(event) {
   mouseDown = true;
 }
 
+/**
+ * Handles the mousemove event.
+ * @param {Event} event
+ */
 function mousemoveHandler(event) {
   let rect = canvas.getBoundingClientRect();
 
@@ -118,6 +138,10 @@ function mousemoveHandler(event) {
   }
 }
 
+/**
+ * Handles the mouseup event.
+ * @param {Event} event
+ */
 function mouseupHandler(event) {
   mouseDown = false;
   tool.onRelease(event.x, event.y, ctx);
@@ -125,14 +149,17 @@ function mouseupHandler(event) {
 }
 
 /**
- *
+ * Checks whether a string is alphanumeric.
+ * @param {String} str
+ * @return {bool}
  */
 function isAlphanumeric(str) {
   return /^[a-zA-Z0-9]+$/.test(str);
 }
 
 /**
- *
+ * Keydown event listener for when writing a custom word.
+ * @param {Event} event
  */
 function keydownListener(event) {
   const parent = document.getElementById("word-display");
@@ -164,17 +191,19 @@ function keydownListener(event) {
 }
 
 /**
- *
+ * Submit listener for chat box.
+ * @param {Event} event
  */
-function handleSubmit(e) {
-  if (e.key === "Enter") {
+function chatBoxSubmitListener(event) {
+  if (event.key === "Enter") {
     const text = e.explicitOriginalTarget.value;
     console.log(text);
+    // TODO: Notify server
     e.explicitOriginalTarget.value = "";
   }
 }
 
-document.getElementById("chat-textbox").addEventListener("keydown", handleSubmit);
+document.getElementById("chat-textbox").addEventListener("keydown", chatBoxSubmitListener);
 canvas.addEventListener("mousedown", mousedownHandler);
 canvas.addEventListener("mouseup", mouseupHandler);
 canvas.addEventListener("mousemove", mousemoveHandler);
@@ -184,6 +213,6 @@ canvas.addEventListener("mousemove", mousemoveHandler);
  */
 Array.from(document.getElementsByClassName("toolbox-color")).forEach((e) => {
   e.onclick = () => {
-    tool.color = e.style.background;
+    tool.changeColor(e.style.background);
   }
 });
