@@ -5,10 +5,12 @@
     --leaderboard-player-background: beige;
 
     --border-radius: 0.5em;
+    --border-radius-tool: 0.1em;
 
     --column: calc(100vw / 7);
 
     --leaderboard-width-full: calc(var(--column) * 1.5);
+
     --leaderboard-player-holder-border: 2px;
     --leaderboard-player-holder-height: calc(
         (100% / var(--max-players)) -
@@ -18,8 +20,9 @@
 
     --word-display-height: 3em;
 
+    --canvas-holder-height-max: calc(87vh + 3em);
     --canvas-width-max: min(45vw, 80vh);
-    --canvas-width-full: calc(var(--column) * 4);
+    --canvas-width-full: calc((var(--column) * 4) - 3em);
 
     --chat-width-full: calc(var(--column) * 2.5);
 }
@@ -88,7 +91,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .letter-box {
@@ -99,25 +101,71 @@ main {
     text-align: center;
 }
 
-#canvas {
-    margin: 0em 0em 2em 0em;
-    /* border: 1px solid black; */
-    background: var(--background-white);
-
-    max-width: var(--canvas-width-max);
-    width: var(--canvas-width-full);
-
-    max-height: var(--canvas-width-max);
-    height: var(--canvas-width-full);
-}
-
 #canvas-holder {
+    max-height: var(--canvas-holder-height-max);
     margin: 1em;
     display: inline-block;
 
     background: red;
     border: 1px solid darkred;
     border-radius: var(--border-radius);
+}
+
+#canvas {
+    margin: 0;
+    /* border: 1px solid black; */
+    background: var(--background-white);
+
+    max-width: var(--canvas-width-max);
+    width: var(--canvas-width-full);
+
+    aspect-ratio: 1 / 1;
+
+    /* max-height: var(--canvas-width-max);
+    height: var(--canvas-width-full); */
+}
+
+#toolbox {
+    height: 3em;
+    display: flex;
+}
+
+#toolbox-tools {
+    display: flex;
+    align-items: center;
+    margin: 0 0.5em 0 0.5em;
+}
+
+#toolbox-colors {
+    display: flex;
+    flex: 1 1 calc(100% / 9);
+    flex-wrap: wrap;
+    margin: 0em 0.5em 0.1em 0.5em;
+}
+
+.toolbox-tool {
+    display: inline-block;
+    width: 1.7em;
+    height: 1.7em;
+    margin: 0.3em;
+
+    border: 1px solid black;
+    border-radius: var(--border-radius-tool);
+}
+
+.toolbox-tool img {
+    width: 100%;
+    height: 100%;
+}
+
+.toolbox-color {
+    flex: 1 1 calc(100% / 9);
+    display: inline-block;
+
+    margin: 0.02em;
+
+    border: 1px solid black;
+    border-radius: var(--border-radius-tool);
 }
 
 #chat-holder {
