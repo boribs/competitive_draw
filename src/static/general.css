@@ -237,3 +237,26 @@ main {
 .player-green {
     color: green;
 }
+
+@media (max-width: 1000px) {
+    #leaderboard-holder, #canvas-holder, #chat-holder{
+        margin: 0.5em;
+    }
+
+    .toolbox-tool {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
+@media (max-width: 900px) {
+    #leaderboard-holder, #canvas-holder, #chat-holder{
+        margin: 0.2em;
+    }
+
+    .toolbox-tool {
+        width: 1.2em;
+        height: 1.2em;
+        margin: 0.15em;
+    }
+}
