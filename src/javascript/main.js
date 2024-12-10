@@ -8,16 +8,6 @@ const ctx = canvas.getContext("2d");
 
 let tool = new Pencil(ctx);
 
-function handleSubmit(e) {
-  if (e.key === "Enter") {
-    const text = e.explicitOriginalTarget.value;
-    console.log(text);
-    e.explicitOriginalTarget.value = "";
-  }
-}
-
-document.getElementById("chat-textbox").addEventListener("keydown", handleSubmit);
-
 /**
  * @param {String} word The word to be set for the players to guess
  * @param {bool} fill Fill letters in word?
@@ -40,6 +30,9 @@ function setWord(word, fill) {
 
 // setWord("PARANGARICUTIRIMICUARO");
 
+/**
+ *
+ */
 function suggestWords() {
   // request words
   const words = ["perezoso", "espantapajaros", "parangaricutirimicuaro"];
@@ -170,6 +163,27 @@ function keydownListener(event) {
   }
 }
 
+/**
+ *
+ */
+function handleSubmit(e) {
+  if (e.key === "Enter") {
+    const text = e.explicitOriginalTarget.value;
+    console.log(text);
+    e.explicitOriginalTarget.value = "";
+  }
+}
+
+document.getElementById("chat-textbox").addEventListener("keydown", handleSubmit);
 canvas.addEventListener("mousedown", mousedownHandler);
 canvas.addEventListener("mouseup", mouseupHandler);
 canvas.addEventListener("mousemove", mousemoveHandler);
+
+/**
+ * Color changes!
+ */
+Array.from(document.getElementsByClassName("toolbox-color")).forEach((e) => {
+  e.onclick = () => {
+    tool.color = e.style.background;
+  }
+});

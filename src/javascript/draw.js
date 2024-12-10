@@ -68,6 +68,7 @@ class Pencil extends DrawingTool {
     this.ctx.strokeStyle = this.color;
     this.ctx.lineWidth = this.thickness;
 
+    this.ctx.beginPath();
     this.ctx.moveTo(x, y);
     this.ctx.lineTo(x + 1, y + 1);
     this.ctx.stroke();
@@ -82,6 +83,7 @@ class Pencil extends DrawingTool {
     this.ctx.strokeStyle = this.color;
     this.ctx.lineWidth = this.thickness;
 
+    this.ctx.beginPath();
     this.ctx.moveTo(this.#lastDot.x, this.#lastDot.y);
     this.ctx.lineTo(x, y);
     this.ctx.stroke();
