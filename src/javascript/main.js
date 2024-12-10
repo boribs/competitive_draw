@@ -50,7 +50,10 @@ function suggestWords() {
     if (w.length > 16) { s.classList.add("word-small"); }
     s.innerText = w.toUpperCase();
     s.onclick = () => {
-      console.log("selected: ", s.innerText);
+      parent.replaceChildren();
+      parent.classList.remove("selecting");
+      setWord(s.innerText, true);
+      // TODO: notify server
     }
 
     parent.appendChild(s);
