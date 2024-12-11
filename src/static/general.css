@@ -190,8 +190,12 @@ main {
     height: 1.7em;
     margin: 0.3em;
 
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: var(--border-radius-tool);
+}
+
+.toolbox-tool:active > img {
+    filter: invert(100%);
 }
 
 .toolbox-tool img {
