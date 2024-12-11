@@ -10,7 +10,19 @@ const TOOLS = {
   "toolbox-pencil": new Pencil(ctx),
   "toolbox-eraser": new Eraser(ctx),
 };
+
+const toolHint = document.getElementById("canvas-tool-hint");
 let tool = TOOLS["toolbox-pencil"];
+setToolHintIcon("toolbox-pencil");
+
+/**
+ * Sets the tool hint to the correct icon.
+ * @param {String} toolId
+ */
+function setToolHintIcon(toolId) {
+  const icon = toolId.slice(8);
+  toolHint.children[0].setAttribute("src", `./static/${icon}.png`);
+}
 
 /**
  * @param {String} word The word to be set for the players to guess
@@ -134,14 +146,21 @@ function mousedownHandler(event) {
 function mousemoveHandler(event) {
   let rect = canvas.getBoundingClientRect();
 
-  if (mouseDown && withinCanvas(event, rect)) {
-    let [x, y] = calculateCanvasPos(event, rect);
+  if (withinCanvas(event, rect)) {
+    toolHint.style.left = `${event.x + 4}px`;
+    toolHint.style.top = `${event.y - 20}px`;
+    toolHint.style.visibility = "visible";
 
-    tool.onHold(x, y, ctx);
-    // console.log("hold");
+    if (mouseDown) {
+      let [x, y] = calculateCanvasPos(event, rect);
+
+      tool.onHold(x, y, ctx);
+    } else {
+      mouseDown = false;
+      tool.onRelease(event.x, event.y, ctx);
+    }
   } else {
-    mouseDown = false;
-    tool.onRelease(event.x, event.y, ctx);
+    toolHint.style.visibility = "hidden";
   }
 }
 
@@ -213,7 +232,7 @@ function chatBoxSubmitListener(event) {
 document.getElementById("chat-textbox").addEventListener("keydown", chatBoxSubmitListener);
 canvas.addEventListener("mousedown", mousedownHandler);
 canvas.addEventListener("mouseup", mouseupHandler);
-canvas.addEventListener("mousemove", mousemoveHandler);
+document.addEventListener("mousemove", mousemoveHandler);
 
 /**
  * Tool changes!
@@ -221,14 +240,15 @@ canvas.addEventListener("mousemove", mousemoveHandler);
 ["toolbox-pencil", "toolbox-eraser"].forEach((id) => {
   document.getElementById(id).onclick = () => {
     tool = TOOLS[id];
+    setToolHintIcon(id);
   };
 })
 
 /**
  * Color changes!
  */
-Array.from(document.getElementsByClassName("toolbox-color")).forEach((e) => {
-  e.onclick = () => {
-    tool.changeColor(e.style.background);
+Array.from(document.getElementsByClassName("toolbox-color")).forEach((elem) => {
+  elem.onclick = () => {
+    tool.changeColor(elem.style.background);
   }
 });

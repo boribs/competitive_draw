@@ -27,6 +27,15 @@
     --chat-width-full: calc(var(--column) * 2.5);
 }
 
+#canvas-tool-hint {
+    position: absolute;
+}
+
+#canvas-tool-hint img {
+    width: 1em;
+    height: 1em;
+}
+
 body {
     margin: 0;
     padding: 0;
