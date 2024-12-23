@@ -1,7 +1,14 @@
-// expressjs stuff
-// server invocation
-
 import { Pencil, Eraser } from "./draw.js";
+import "./socket.io.js";
+
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams);
+
+const socket = io({
+  auth: {
+    token: urlParams.get('name'),
+  }
+});
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -21,7 +28,7 @@ setToolHintIcon("toolbox-pencil");
  */
 function setToolHintIcon(toolId) {
   const icon = toolId.slice(8);
-  toolHint.children[0].setAttribute("src", `./static/${icon}.png`);
+  toolHint.children[0].setAttribute("src", `public/static/${icon}.png`);
 }
 
 /**

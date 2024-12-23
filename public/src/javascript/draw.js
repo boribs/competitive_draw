@@ -19,6 +19,13 @@ class UnimplementedError extends Error {
 }
 
 /**
+ * Class that stores actions, to allow for undo and redo features.
+ */
+class Actions {
+  // TODO
+}
+
+/**
  * Base class for every drawing tool avaliable.
  */
 class DrawingTool {
