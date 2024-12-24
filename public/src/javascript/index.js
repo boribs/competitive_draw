@@ -218,7 +218,13 @@ function keydownListener(event) {
   } else if (event.keyCode === 13 && parent.children.length > 1) {
     document.removeEventListener("keydown", keydownListener);
     document.getElementById("chat-textbox").disabled = false;
-    // TODO: Notify server!
+
+    var word = "";
+    parent.childNodes.forEach((c) => {
+      word += c.innerText;
+    });
+
+    socket.emit("new_word", word);
 
   } else if (
     event.key.length === 1 &&
