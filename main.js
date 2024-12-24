@@ -24,6 +24,8 @@ app.get("/suggestwords", (req, res) => {
 const rooms = {};
 
 io.on("connection", (socket) => {
+  const auth = socket["handshake"]["auth"]["token"];
+
   socket.on("join_room", (room) => {
     if (rooms[room] === undefined) {
       rooms[room] = new Room();
@@ -34,7 +36,8 @@ io.on("connection", (socket) => {
 
     const r = rooms[room];
     r.addConnection(socket);
-    // console.log(rooms);
+
+    io.to(room).emit("player_list", r.getPlayers());
 
     // TODO: start the game not like this.
     if (r.connections.length == 2) {
@@ -47,6 +50,8 @@ io.on("connection", (socket) => {
     // assumes that sets always keep the same order!
     const r = Array.from(socket.rooms)[1];
     rooms[r].removeConnection(socket);
+
+    io.to(r).emit("player_list", rooms[r].getPlayers());
 
     // if empty room
     //   ...

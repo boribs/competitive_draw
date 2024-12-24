@@ -14,6 +14,15 @@ socket.on("connect", () => {
   socket.emit("join_room", "room:A");
 });
 
+socket.on("player_list", (players) => {
+  document.getElementById("leaderboard-holder").replaceChildren();
+
+  players.forEach((player) => {
+    var [name, score] = player;
+    addPlayerBanner(name, score);
+  });
+});
+
 socket.on("new_painter", (who) => {
   console.log("new painter:", who);
 
@@ -81,6 +90,32 @@ function setWord(word, fill = false) {
 
     wd.appendChild(d);
   });
+}
+
+/**
+ * GUI display of player banner
+ * @param {String} name
+ * @param {String} score
+ */
+function addPlayerBanner(name, score) {
+  const parent = document.getElementById("leaderboard-holder");
+  const holder = createElement("div", `player-${name}`, ["leaderboard-player-holder"]);
+  const imgHolder = createElement("div", null, ["leaderboard-player-image"]);
+  const img = createElement("img");
+  img.src = "#";
+  imgHolder.appendChild(img);
+  holder.appendChild(imgHolder);
+
+  const data = createElement("div", null, ["leaderboard-player-data"]);
+  const playerName = createElement("div", null, ["leaderboard-player-name"]);
+  playerName.innerText = name;
+  const playerScore = createElement("div", null, ["leaderboard-player-score"]);
+  playerScore.innerText = score;
+  data.appendChild(playerName);
+  data.appendChild(playerScore);
+  holder.appendChild(data);
+
+  parent.appendChild(holder);
 }
 
 /**
