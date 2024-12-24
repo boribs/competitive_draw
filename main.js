@@ -51,6 +51,10 @@ io.on("connection", (socket) => {
     // if empty room
     //   ...
   });
+
+  socket.on("new_word", (word) => {
+    socket.broadcast.emit("set_word", word);
+  });
 });
 
 server.listen(3000, () => {

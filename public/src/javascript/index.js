@@ -22,6 +22,10 @@ socket.on("new_painter", (who) => {
   }
 });
 
+socket.on("set_word", (word) => {
+  setWord(word, false);
+});
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -47,8 +51,9 @@ function setToolHintIcon(toolId) {
  * @param {String} word The word to be set for the players to guess
  * @param {bool} fill Fill letters in word?
  */
-function setWord(word, fill) {
+function setWord(word, fill = false) {
   const wd = document.getElementById("word-display");
+  wd.replaceChildren();
 
   Array.from(word).forEach((l, i) => {
     const d = document.createElement("div");
@@ -62,8 +67,6 @@ function setWord(word, fill) {
     wd.appendChild(d);
   });
 }
-
-// setWord("PARANGARICUTIRIMICUARO");
 
 /**
  * GUI display of suggested words.
@@ -83,7 +86,8 @@ async function suggestWords() {
       parent.replaceChildren();
       parent.classList.remove("selecting");
       setWord(s.innerText, true);
-      // TODO: notify server
+
+      socket.emit("new_word", s.innerText);
     }
 
     parent.appendChild(s);
