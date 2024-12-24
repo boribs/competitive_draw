@@ -6,7 +6,13 @@ console.log(urlParams);
 
 const socket = io({
   auth: {
-    token: urlParams.get('name'),
+    token: urlParams.get("name"),
+  }
+});
+
+socket.on("connect", () => {
+  socket.emit("join_room", "room:A");
+});
   }
 });
 
