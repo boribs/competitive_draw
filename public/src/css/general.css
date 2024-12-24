@@ -41,10 +41,6 @@ body {
     padding: 0;
     background: gray;
     font-family: Tahoma, sans-serif;
-
-    /* font-family: "Nanum Pen Script", serif;
-    font-weight: 400;
-    font-style: normal; */
 }
 
 main {
@@ -223,21 +219,18 @@ main {
 }
 
 #chat-holder {
-    margin: 1em;
     width: var(--chat-width-full);
+    margin: 1em;
 }
 
 #chat-holder-messages {
-    max-height: calc(var(--canvas-width-max) + 5em);
-    height: calc(var(--canvas-width-full) + 5em);
-    overflow-y: scroll;
-
     background: var(--background-white);
     border: 1px solid darkred;
     border-bottom: 0;
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 
     font-size: 1.3cqw;
+    overflow: scroll;
 }
 
 #chat-holder-textbox {
@@ -254,9 +247,7 @@ main {
     width: 90%;
 
     padding: 0;
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-bottom: 0.2em;
+    margin: 0.5em 1em 0.2em 1em;
 
     border: 0;
     border-bottom: 1px solid gray;

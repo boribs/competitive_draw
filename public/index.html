@@ -57,6 +57,20 @@
                 <input id="chat-textbox" placeholder="escribe algo..." autocomplete="off">
             </div>
         </div>
+        <script type="text/javascript">
+            function resizeChat() {
+                document.getElementById("chat-holder").style.height = '0px';
+
+                const canvasHeight = document.getElementById("canvas-holder").getBoundingClientRect().height;
+                const textboxHeight = document.getElementById("chat-holder-textbox").getBoundingClientRect().height;
+
+                document.getElementById("chat-holder").style.height = canvasHeight + 'px';
+                document.getElementById("chat-holder-messages").style.height = canvasHeight - textboxHeight + 'px';
+            }
+
+            resizeChat();
+            window.addEventListener("resize", resizeChat);
+        </script>
     </main>
 </body>
 </html>
