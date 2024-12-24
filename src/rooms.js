@@ -15,10 +15,9 @@ class Room {
    *
    */
   getPlayers() {
-    const r = this;
     return this.connections.map((c) => {
       var name = c["handshake"]["auth"]["token"];
-      return [name, r.scores[name]];
+      return [name, c["score"]];
     }).sort((a, b) => {
       return b[1] - a[1];
     });
@@ -28,8 +27,8 @@ class Room {
    * @param {Socket} socket
    */
   addConnection(socket) {
+    socket["score"] = 0;
     this.connections.push(socket);
-    this.scores[socket["handshake"]["auth"]["token"]] = 0;
   }
 
   /**
@@ -38,7 +37,6 @@ class Room {
   removeConnection(socket) {
     const i = this.connections.indexOf(socket);
     this.connections.splice(i, 1);
-    delete this.scores[socket["handshake"]["auth"]["token"]];
 
     // deal with turns
   }
