@@ -39,6 +39,21 @@ let tool = TOOLS["toolbox-pencil"];
 setToolHintIcon("toolbox-pencil");
 
 /**
+ * Helper function to create elements fast.
+ * @param {String} type
+ * @param {String | null} id
+ * @param {String[] | null} classes
+ *
+ * @return {HTMLElement}
+ */
+function createElement(type, id = null, classes = null) {
+  var elem = document.createElement(type);
+  if (id) { elem.id = id; }
+  if (classes) { elem.classList.add(classes); }
+  return elem;
+}
+
+/**
  * Sets the tool hint to the correct icon.
  * @param {String} toolId
  */
