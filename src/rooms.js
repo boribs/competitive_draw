@@ -7,6 +7,7 @@ class Room {
   constructor() {
     this.connections = [];
     this.drawing = -1;
+    this.word = "";
   }
 
   /**
@@ -38,9 +39,16 @@ class Room {
   /**
    *
   */
- nextTurn() {
+  nextTurn() {
    this.drawing = (this.drawing + 1) % this.connections.length;
    // notify everyone that `this.drawing`th connection is now drawing
+  }
+
+  /**
+   * @param {String} word
+   */
+  setWord(word) {
+    this.word = word;
   }
 }
 

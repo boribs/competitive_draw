@@ -54,6 +54,8 @@ io.on("connection", (socket) => {
 
   socket.on("new_word", (word) => {
     socket.broadcast.emit("set_word", word);
+    const r = Array.from(socket.rooms)[1];
+    rooms[r].setWord(word);
   });
 });
 
