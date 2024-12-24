@@ -11,7 +11,7 @@ const socket = io({
 });
 
 socket.on("connect", () => {
-  socket.emit("join_room", "room:A");
+  socket.emit("join_room", window.location.pathname.slice(1));
 });
 
 socket.on("player_list", (players) => {
