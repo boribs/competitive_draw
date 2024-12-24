@@ -316,6 +316,9 @@ function createChatBlob(data) {
   const span = "<span class=\"player-" + data["color"] + "\">" + data["sender"] + "</span>";
   blob.innerHTML = span + (data["guessed"] ? " " : ": ") + data["text"];
   document.getElementById("chat-holder-inner").appendChild(blob);
+
+  const scroll = document.getElementById("chat-holder-messages");
+  scroll.scrollTo(0, scroll.scrollHeight);
 }
 
 document.getElementById("chat-textbox").addEventListener("keydown", chatBoxSubmitListener);
