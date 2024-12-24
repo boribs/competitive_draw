@@ -62,6 +62,18 @@ io.on("connection", (socket) => {
     const r = Array.from(socket.rooms)[1];
     rooms[r].setWord(word);
   });
+
+  socket.on("chat", (text) => {
+    const r = Array.from(socket.rooms)[1];
+    const guessed = rooms[r].confirmGuess(text);
+
+    io.to(r).emit("chat", {
+      sender: socket["handshake"]["auth"]["token"],
+      color: socket["color"],
+      text: guessed ? "adivinó la palabra!" : text, // TODO: pls not like this
+      guessed: guessed,
+    });
+  });
 });
 
 server.listen(3000, () => {

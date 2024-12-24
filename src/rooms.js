@@ -8,7 +8,13 @@ class Room {
     this.connections = [];
     this.drawing = -1;
     this.word = "";
-    this.scores = {};
+
+    this.availableColors = [
+      "red",
+      "blue",
+      "yellow",
+      "green",
+    ];
   }
 
   /**
@@ -28,6 +34,7 @@ class Room {
    */
   addConnection(socket) {
     socket["score"] = 0;
+    socket["color"] = this.availableColors.pop();
     this.connections.push(socket);
   }
 
@@ -36,6 +43,7 @@ class Room {
    */
   removeConnection(socket) {
     const i = this.connections.indexOf(socket);
+    this.availableColors.push(this.connections[i]["color"]);
     this.connections.splice(i, 1);
 
     // deal with turns
@@ -62,6 +70,14 @@ class Room {
    */
   setWord(word) {
     this.word = word;
+  }
+
+  /**
+   * @param {String} str
+   */
+  confirmGuess(str) {
+    // TODO: Implement this.
+    return false;
   }
 }
 

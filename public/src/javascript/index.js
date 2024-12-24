@@ -35,6 +35,10 @@ socket.on("set_word", (word) => {
   setWord(word, false);
 });
 
+socket.on("chat", (data) => {
+  createChatBlob(data);
+});
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -298,11 +302,20 @@ function keydownListener(event) {
  */
 function chatBoxSubmitListener(event) {
   if (event.key === "Enter") {
-    const text = e.explicitOriginalTarget.value;
-    console.log(text);
-    // TODO: Notify server
-    e.explicitOriginalTarget.value = "";
+    const text = event.explicitOriginalTarget.value;
+    socket.emit("chat", text);
+    event.explicitOriginalTarget.value = "";
   }
+}
+
+/**
+ * Creates chat DOM elements.
+ */
+function createChatBlob(data) {
+  const blob = createElement("p", null, data["guessed"] ? ["guessed"] : null);
+  const span = "<span class=\"player-" + data["color"] + "\">" + data["sender"] + "</span>";
+  blob.innerHTML = span + (data["guessed"] ? " " : ": ") + data["text"];
+  document.getElementById("chat-holder-inner").appendChild(blob);
 }
 
 document.getElementById("chat-textbox").addEventListener("keydown", chatBoxSubmitListener);
