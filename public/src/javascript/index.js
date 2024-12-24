@@ -13,6 +13,12 @@ const socket = io({
 socket.on("connect", () => {
   socket.emit("join_room", "room:A");
 });
+
+socket.on("new_painter", (who) => {
+  console.log("new painter:", who);
+
+  if (urlParams.get("name") === who) {
+    suggestWords();
   }
 });
 
