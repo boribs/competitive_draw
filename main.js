@@ -16,6 +16,11 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "public", "index.html"));
 });
 
+app.get("/suggestwords", (req, res) => {
+  // TODO: Select words from bigger list!
+  res.send(["perezoso", "espantapajaros", "parangaricutirimicuaro"]);
+})
+
 const rooms = {};
 
 io.on("connection", (socket) => {

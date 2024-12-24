@@ -1,8 +1,8 @@
 import { Pencil, Eraser } from "./draw.js";
 import "./socket.io.js";
 
+const address = window.location.protocol + "//" + window.location.host;
 const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams);
 
 const socket = io({
   auth: {
@@ -67,12 +67,11 @@ function setWord(word, fill) {
 
 /**
  * GUI display of suggested words.
- * *INCOMPLETE*
  */
-function suggestWords() {
-  // request words
-  const words = ["perezoso", "espantapajaros", "parangaricutirimicuaro"];
+async function suggestWords() {
+  const words = await fetch(address + "/suggestwords").then(res => res.json());
   const parent = document.getElementById("word-display");
+  parent.replaceChildren();
   parent.classList.add("selecting");
 
   words.forEach((w) => {
@@ -109,8 +108,6 @@ function suggestWords() {
   }
   parent.appendChild(o);
 }
-
-suggestWords();
 
 /**
  * mouse controls.
