@@ -13,14 +13,18 @@ function getCookie(name) {
   return cookie[name];
 }
 
+const userId = getCookie("drawingGameUserId");
+const userName = getCookie("drawingGameUserName");
+
 const socket = io({
   auth: {
-    token: getCookie("drawingGameUserId"),
+    token: `${userId};${userName}`,
   }
 });
 
 socket.on("connect", () => {
   socket.emit("join_room", room);
+  // clear cookies
 });
 
 socket.on("player_list", (players) => {
@@ -33,12 +37,13 @@ socket.on("player_list", (players) => {
 });
 
 socket.on("new_painter", (who) => {
-  console.log("new painter:", who);
+  console.log("new painter:", who, userId);
 
-  // TODO: redo this
-  // if (urlParams.get("name") === who) {
-  //   suggestWords();
-  // }
+  if (userId === who) {
+    suggestWords();
+  } else {
+    document.getElementById("word-display").replaceChildren();
+  }
 });
 
 socket.on("set_word", (word) => {

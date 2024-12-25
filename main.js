@@ -82,9 +82,7 @@ io.on("connection", (socket) => {
     io.to(room).emit("player_list", r.getPlayers());
 
     // TODO: start the game not like this.
-    if (r.connections.length == 2) {
-      const auth = socket["handshake"]["auth"]["token"];
-      io.to(room).emit("new_painter", auth);
+      io.to(room).emit("new_painter", socket["userId"]);
     }
   });
 
