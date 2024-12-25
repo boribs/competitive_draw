@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: gray;
+    font-family: Tahoma, sans-serif;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu-container {
+    width: 40%;
+    max-width: 350px;
+    min-width: 300px;
+    height: 70%;
+
+    border: 1px solid darkred;
+    border-radius: 10px;
+    background: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-button {
+    background: red;
+    border: 1px solid darkred;
+    border-radius: 4px;
+
+    padding: 0.5em;
+    margin: 0.5em;
+    color: rgb(77, 0, 0);
+
+    font-size: min(3.5cqw, 20px);
+}
+
+.menu-button:hover {
+    cursor: default;
+    background: rgb(248, 73, 73);
+}
+
+.disabled, .disabled:hover {
+    background: gray;
+    border: 1px solid black;
+    color: rgb(48, 48, 48);
+}
+
+#name-box {
+    text-align: center;
+    min-width: 30%;
+
+    display: flex;
+}
+
+.letter-box {
+    border-bottom: 2px solid darkred;
+    margin: 0 0.1em 0 0.1em;
+}
+
+.disabled .letter-box {
+    border-bottom: 2px solid black;
+}
