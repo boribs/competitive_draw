@@ -67,6 +67,19 @@ app.get("/play/:room", (req, res) => {
 
 io.on("connection", (socket) => {
   const auth = socket["handshake"]["auth"]["token"];
+  const [userId, userName] = auth.split(";");
+
+  // prevent users from logging in twice
+  if (userPool.has(userId)) {
+    socket.disconnect(true);
+    // redirect to main page
+  }
+
+  userPool.add(userId);
+  userNames[userId] = userName;
+
+  socket["userId"] = userId;
+  socket["userName"] = userName;
 
   socket.on("join_room", (room) => {
     if (rooms[room] === undefined) {
