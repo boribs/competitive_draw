@@ -41,7 +41,8 @@ function submitName(name) {
   })
   .then(res => res.json())
   .then(data => {
-    document.cookie = `drawingGameUserId=${name};`;
+    document.cookie = `drawingGameUserId=${data["userId"]};`;
+    document.cookie = `drawingGameUserName=${name};`;
     window.location.href = address + "/play/" + data["roomId"];
   });
 }
