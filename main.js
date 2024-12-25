@@ -44,8 +44,6 @@ app.post("/createroom", (req, res) => {
   var userId = randomId(userPool);
   var roomId = "r" + randomId(roomPool);
 
-  userPool.add(userId);
-  userNames[userId] = req.body["playerName"];
   roomPool.add(roomId);
   rooms[roomId] = new Room();
   console.log("Created room:", roomId);
@@ -82,13 +80,11 @@ io.on("connection", (socket) => {
   socket["userName"] = userName;
 
   socket.on("join_room", (room) => {
-    if (rooms[room] === undefined) {
-      rooms[room] = new Room();
-      // console.log("created room", room);
-    }
+    console.log("joining:", room);
 
     socket.join(room);
 
+    // TODO: Fix crash when not found.
     const r = rooms[room];
     r.addConnection(socket);
 
