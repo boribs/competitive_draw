@@ -56,6 +56,15 @@ app.post("/createroom", (req, res) => {
   });
 });
 
+app.get("/play/:room", (req, res) => {
+  if (rooms[req.params["room"]] === undefined) {
+    res.status(404).send("not found bby");
+  } else {
+    res.sendFile(join(__dirname, "public", "draw.html"));
+  }
+});
+
+
 io.on("connection", (socket) => {
   const auth = socket["handshake"]["auth"]["token"];
 
