@@ -22,8 +22,7 @@ class Room {
    */
   getPlayers() {
     return this.connections.map((c) => {
-      var name = c["handshake"]["auth"]["token"];
-      return [name, c["score"]];
+      return [c["userName"], c["score"]];
     }).sort((a, b) => {
       return b[1] - a[1];
     });
