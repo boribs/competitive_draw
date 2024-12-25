@@ -6,10 +6,16 @@ import { Server } from "socket.io";
 import { Room } from "./src/rooms.js";
 
 const app = express();
-const server = createServer(app);
 app.use("/public", express.static("public"));
+app.use(express.json({ limit: '100mb' }));
 
+const server = createServer(app);
 const io = new Server(server);
+
+const userPool = new Set();
+const userNames = {};
+const roomPool = new Set();
+const rooms = {};
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.get("/", (req, res) => {
@@ -21,7 +27,34 @@ app.get("/suggestwords", (req, res) => {
   res.send(["perezoso", "espantapajaros", "parangaricutirimicuaro"]);
 })
 
-const rooms = {};
+app.post("/createroom", (req, res) => {
+  /**
+   * @param {Set} pool
+   */
+  function randomId(pool) {
+    var id = Math.floor(Math.random() * 10000);
+
+    while (pool.has(id)) {
+      id = Math.floor(Math.random() * 10000);
+    }
+
+    return id;
+  }
+
+  var userId = randomId(userPool);
+  var roomId = "r" + randomId(roomPool);
+
+  userPool.add(userId);
+  userNames[userId] = req.body["playerName"];
+  roomPool.add(roomId);
+  rooms[roomId] = new Room();
+  console.log("Created room:", roomId);
+
+  res.status(201).send({
+    userId: userId,
+    roomId: roomId,
+  });
+});
 
 io.on("connection", (socket) => {
   const auth = socket["handshake"]["auth"]["token"];
