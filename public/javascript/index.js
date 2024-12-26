@@ -1,5 +1,7 @@
 const address = window.location.protocol + "//" + window.location.host;
 
+let userName = "";
+
 /**
  *
  */
@@ -16,35 +18,31 @@ function nameBox() {
           name += c.innerText;
         }
       });
-      submitName(name);
+
+      if (name.length > 0) {
+        userName = name;
+        disableNameBox();
+      }
     };
   }
 }
 
 /**
- *
+ * Disables the name box.
  */
-function submitName(name) {
+function disableNameBox() {
   window.removeEventListener("keydown", keydownListener);
+  const nameBox = document.getElementById("name-box");
+
+  if (nameBox.classList.contains("disabled")) {
+    nameBox.onclick = null;
+    return;
+  }
 
   Array.from(document.getElementsByClassName("disabled")).forEach((e) => {
     e.classList.remove("disabled");
   });
-
-  document.getElementById("name-box").classList.add("disabled");
-
-  fetch(address + "/createroom", {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.cookie = `drawingGameUserId=${data["userId"]};`;
-    document.cookie = `drawingGameUserName=${name};`;
-    window.location.href = address + "/play/" + data["roomId"];
-  });
+  nameBox.classList.add("disabled");
 }
 
 /**
@@ -78,7 +76,10 @@ function keydownListener(event) {
       }
     });
 
-    submitName(name);
+    if (name.length > 0) {
+      userName = name;
+      disableNameBox();
+    }
 
   } else if (
     event.key.length === 1 &&
