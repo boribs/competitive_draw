@@ -87,10 +87,18 @@ function joinRoom(roomId) {
   })
   .then(res => res.json())
   .then(data => {
-    // TODO: Error handling
-    document.cookie = `drawingGameUserId=${data["userId"]};`;
+    const userId = data["userId"];
+    const roomIdConfirmed = data["roomId"];
+
+    if (!userId | !roomIdConfirmed) {
+      if (data["roomDoesntExist"]) {
+        console.error("Room", roomId, "doesn't exist.");
+      }
+    }
+
+    document.cookie = `drawingGameUserId=${userId};`;
     document.cookie = `drawingGameUserName=${userName};`;
-    window.location.href = address + "/play/" + data["roomId"];
+    window.location.href = address + "/play/" + roomIdConfirmed;
   });
 }
 
