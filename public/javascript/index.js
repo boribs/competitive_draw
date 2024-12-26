@@ -74,6 +74,80 @@ function disableNameBox() {
 }
 
 /**
+ * Requests to join a room.
+ * @param {String} roomId
+ */
+function joinRoom(roomId) {
+  fetch(address + "/getroom", {
+    method: "POST",
+    body: JSON.stringify({ roomId: roomId }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    // TODO: Error handling
+    document.cookie = `drawingGameUserId=${data["userId"]};`;
+    document.cookie = `drawingGameUserName=${userName};`;
+    window.location.href = address + "/play/" + data["roomId"];
+  });
+}
+
+/**
+ * Converts name box button into room id button.
+ */
+function nameBox2RoomName() {
+  const nameBox = document.getElementById("name-box");
+  const joinGame = document.getElementById("join-game")
+
+  if (joinGame.classList.contains("disabled")) {
+    return;
+  }
+
+  joinGame.classList.add("disabled");
+  joinGame.onclick = null;
+
+  nameBox.classList.remove("disabled");
+  nameBox.replaceChildren();
+
+  nameBox.appendChild(createLetterDiv("r"));
+  window.addEventListener("keydown", joinRoomKeydownHandler);
+  nameBox.onclick = () => {
+    var code = "";
+    nameBox.childNodes.forEach((c) => {
+      code += c.innerText;
+    });
+    joinRoom(code);
+  };
+}
+
+/**
+ *
+ */
+function joinRoomKeydownHandler(event) {
+  const nameBox = document.getElementById("name-box");
+  var r = keydownHandler(event, nameBox, 6);
+
+  switch (r) {case "ret":
+    nameBox.removeChild(nameBox.lastChild);
+    break;
+
+  case "ent":
+    var code = "";
+    nameBox.childNodes.forEach((c) => {
+      code += c.innerText;
+    });
+    joinRoom(code);
+    break;
+
+  default:
+    if (r) { nameBox.appendChild(createLetterDiv(r)); }
+    break;
+  }
+}
+
+/**
  * Requests a new room creation, then redirects the user to it.
  */
 function createRoom() {
