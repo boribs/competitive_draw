@@ -41,12 +41,20 @@ app.post("/createroom", (req, res) => {
     return id;
   }
 
-  var userId = randomId(userPool);
-  var roomId = "r" + randomId(roomPool);
+  // TODO: Error handling
+  var roomId = req.body["roomId"];
 
-  roomPool.add(roomId);
-  rooms[roomId] = new Room();
-  console.log("Created room:", roomId);
+  if (roomId === false) {
+    roomId = "r" + randomId(roomPool);
+    roomPool.add(roomId);
+    rooms[roomId] = new Room();
+    console.log("Created room:", roomId);
+
+  } else {
+    // TODO: Error handling
+  }
+
+  var userId = randomId(userPool);
 
   res.status(201).send({
     userId: userId,

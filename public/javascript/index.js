@@ -85,6 +85,8 @@ function createRoom() {
 
   fetch(address + "/createroom", {
     method: "POST",
+    // false roomId indicates that a new room has to be created.
+    body: JSON.stringify({ roomId: false }),
     headers: {
       "Content-type": "application/json; charset=UTF-8"
     }
