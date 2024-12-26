@@ -31,6 +31,9 @@ function deleteAllCookies() {
 
 const userId = getCookie("drawingGameUserId");
 const userName = getCookie("drawingGameUserName");
+if (!userId | !userName) {
+  window.location.href = address;
+}
 
 const socket = io({
   auth: {
