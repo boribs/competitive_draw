@@ -27,7 +27,7 @@ app.get("/suggestwords", (req, res) => {
   res.send(["perezoso", "espantapajaros", "parangaricutirimicuaro"]);
 })
 
-app.post("/createroom", (req, res) => {
+app.post("/getroom", (req, res) => {
   /**
    * @param {Set} pool
    */
