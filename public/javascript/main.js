@@ -4,6 +4,10 @@ import "./socket.io.js";
 const address = window.location.protocol + "//" + window.location.host;
 const room = window.location.pathname.replace("play/", "").slice(1);
 
+/**
+ * Gets a cookie.
+ * @param {String} name
+ */
 function getCookie(name) {
   let cookie = {};
   document.cookie.split(';').forEach(function(el) {
@@ -11,6 +15,18 @@ function getCookie(name) {
     cookie[split[0].trim()] = split.slice(1).join("=");
   })
   return cookie[name];
+}
+
+/**
+ * Deletes all cookies.
+ */
+function deleteAllCookies() {
+  // https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript
+  document.cookie.split(';').forEach(cookie => {
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/";
+  });
 }
 
 const userId = getCookie("drawingGameUserId");
@@ -24,7 +40,7 @@ const socket = io({
 
 socket.on("connect", () => {
   socket.emit("join_room", room);
-  // clear cookies
+  deleteAllCookies();
 });
 
 socket.on("player_list", (players) => {
