@@ -83,7 +83,7 @@ function createRoom() {
     return;
   }
 
-  fetch(address + "/createroom", {
+  fetch(address + "/getroom", {
     method: "POST",
     // false roomId indicates that a new room has to be created.
     body: JSON.stringify({ roomId: false }),
