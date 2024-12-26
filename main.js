@@ -44,6 +44,7 @@ app.post("/getroom", (req, res) => {
   var roomId = req.body["roomId"];
   if (roomId === undefined) {
     console.error("'roomId' not present in request body", req.body);
+    res.status(404).send();
     return;
   }
 
@@ -53,8 +54,10 @@ app.post("/getroom", (req, res) => {
     rooms[roomId] = new Room();
     console.log("Created room:", roomId);
 
-  } else {
-    // TODO: Error handling
+  } else if (!roomPool.has(roomId)) {
+    console.error("Nonexistant roomId:", roomId);
+    res.status(404).send();
+    return;
   }
 
   var userId = randomId(userPool);
