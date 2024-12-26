@@ -2,15 +2,43 @@ const address = window.location.protocol + "//" + window.location.host;
 
 let userName = "";
 
+function nameBoxKeydownHandler(event) {
+  const elem = document.getElementById("name-box");
+
+  var r = keydownHandler(event, elem, 13);
+  switch(r) {
+    case "ret":
+      elem.removeChild(elem.lastChild);
+      break;
+
+    case "ent":
+      var name = "";
+      elem.childNodes.forEach((c, i) => {
+        if (i != 0) {
+          name += c.innerText;
+        }
+      });
+      userName = name;
+      disableNameBox();
+      break;
+
+    default:
+      if (r) { elem.appendChild(createLetterDiv(r)); }
+      break;
+  }
+}
+
 /**
- *
+ * Changes the name box to display keyboard action.
  */
 function nameBox() {
   const elem = document.getElementById("name-box");
 
   if (elem.innerText === "ESCRIBE TU NOMBRE") {
     elem.innerText = ">";
-    window.addEventListener("keydown", keydownListener);
+
+    window.addEventListener("keydown", nameBoxKeydownHandler);
+
     elem.onclick = () => {
       var name = "";
       elem.childNodes.forEach((c, i) => {
@@ -31,8 +59,8 @@ function nameBox() {
  * Disables the name box.
  */
 function disableNameBox() {
-  window.removeEventListener("keydown", keydownListener);
   const nameBox = document.getElementById("name-box");
+  window.removeEventListener("keydown", nameBoxKeydownHandler);
 
   if (nameBox.classList.contains("disabled")) {
     nameBox.onclick = null;
@@ -79,40 +107,27 @@ function isAlphanumeric(str) {
 }
 
 /**
- * Keydown event listener for when writing a custom word.
+ * Keydown event handler.
  * @param {Event} event
+ * @param {HTMLElement} parent
+ * @param {number} limit
+ *
+ * @return {String}
  */
-function keydownListener(event) {
-  const parent = document.getElementById("name-box");
-
+function keydownHandler(event, parent, limit = 10) {
   if (event.keyCode === 8) {
     if (parent.hasChildNodes() && parent.childNodes.length > 1) {
-      parent.removeChild(parent.lastChild);
+      return "ret";
     }
 
   } else if (event.keyCode === 13 && parent.children.length > 1) {
-    window.removeEventListener("keydown", keydownListener);
-
-    var name = "";
-    parent.childNodes.forEach((c, i) => {
-      if (i != 0) {
-        name += c.innerText;
-      }
-    });
-
-    if (name.length > 0) {
-      userName = name;
-      disableNameBox();
-    }
+    return "ent";
 
   } else if (
     event.key.length === 1 &&
-    parent.children.length < 13 &&
+    parent.children.length < limit &&
     isAlphanumeric(event.key)
   ) {
-    const l = document.createElement("div");
-    l.classList.add("letter-box");
-    l.innerHTML = event.key.toUpperCase();
-    parent.appendChild(l);
+    return event.key.toUpperCase();
   }
 }
