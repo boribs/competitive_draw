@@ -98,6 +98,17 @@ function createRoom() {
 }
 
 /**
+ * Creates a div with the letter-box class and the corresponding text inside.
+ * @param {String} char
+ */
+function createLetterDiv(char) {
+  const l = document.createElement("div");
+  l.classList.add("letter-box");
+  l.innerHTML = char;
+  return l;
+}
+
+/**
  * Checks whether a string is alphanumeric.
  * @param {String} str
  * @return {bool}
