@@ -130,7 +130,7 @@ io.on("connection", (socket) => {
     const guessed = rooms[r].confirmGuess(text);
 
     io.to(r).emit("chat", {
-      sender: socket["handshake"]["auth"]["token"],
+      sender: socket["userName"],
       color: socket["color"],
       text: guessed ? "adivinó la palabra!" : text, // TODO: pls not like this
       guessed: guessed,
