@@ -70,6 +70,7 @@ io.on("connection", (socket) => {
   // prevent users from logging in twice
   if (userPool.has(userId)) {
     socket.disconnect(true);
+    console.log("user", userId, "is already connected.");
     // redirect to main page
   }
 
@@ -96,9 +97,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnecting", () => {
+    // console.log("user", socket["userId"], "is disconnecting");
+
     // assumes that sets always keep the same order!
     const r = Array.from(socket.rooms)[1];
     rooms[r].removeConnection(socket);
+
+    userPool.delete(socket["userId"]);
 
     io.to(r).emit("player_list", rooms[r].getPlayers());
 
