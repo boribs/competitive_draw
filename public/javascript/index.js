@@ -46,6 +46,30 @@ function disableNameBox() {
 }
 
 /**
+ * Requests a new room creation, then redirects the user to it.
+ */
+function createRoom() {
+  const newGameButton = document.getElementById("new-game");
+
+  if (newGameButton.classList.contains("disabled")) {
+    return;
+  }
+
+  fetch(address + "/createroom", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.cookie = `drawingGameUserId=${data["userId"]};`;
+    document.cookie = `drawingGameUserName=${userName};`;
+    window.location.href = address + "/play/" + data["roomId"];
+  });
+}
+
+/**
  * Checks whether a string is alphanumeric.
  * @param {String} str
  * @return {bool}
