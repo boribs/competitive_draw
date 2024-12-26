@@ -41,8 +41,11 @@ app.post("/getroom", (req, res) => {
     return id;
   }
 
-  // TODO: Error handling
   var roomId = req.body["roomId"];
+  if (roomId === undefined) {
+    console.error("'roomId' not present in request body", req.body);
+    return;
+  }
 
   if (roomId === false) {
     roomId = "r" + randomId(roomPool);
